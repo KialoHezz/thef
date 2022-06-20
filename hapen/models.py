@@ -55,7 +55,7 @@ class Business(models.Model):
 
 class Posts(models.Model):
 	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
-	NeighbourHood_id = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+	NeighbourHood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
 	post = models.TextField(max_length=255)
 	date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
@@ -64,5 +64,5 @@ class Posts(models.Model):
 
 	@classmethod
 	def get_by_project(cls, id):
-			table = Projects.objects.get(project_id=id)
+			table = NeighbourHood.objects.get(project_id=id)
 			return table
