@@ -16,6 +16,10 @@ class NeighbourHood(models.Model):
 		business =  cls.objects.all()
 		return business
 
+	@classmethod
+	def get_by_id(cls, id):
+			table = NeighbourHood.objects.get(id=id)
+			return table
 
 class User(models.Model):
 	picture = models.ImageField(upload_to = 'userimages/', blank=True, null=True)
@@ -26,7 +30,8 @@ class User(models.Model):
 	
 	def __str__(self):
   		return str(self.id)
-		
+
+
 	@classmethod
 	def get_by_user(cls, editor):
 		profile = cls.objects.filter(editor__username=editor).last()

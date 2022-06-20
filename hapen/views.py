@@ -22,3 +22,8 @@ def profile(request, editor):
     # title = profile.user
 
     return render(request, 'profile/profile.html', {'profile': profile, "editor": editor})
+
+def neighbourhood(request, id):
+    neighbourhood = NeighbourHood.get_by_id(id)
+
+    return render(request, 'home/neighbourhood.html', {'neighbourhood': neighbourhood, "id": id})
