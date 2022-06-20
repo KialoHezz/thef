@@ -52,3 +52,10 @@ class Business(models.Model):
 	def get_all(cls):
 		business =  cls.objects.all()
 		return business
+
+class Posts(models.Model):
+	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
+	NeighbourHood_id = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+	post = models.TextField(max_length=255)
+	date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
