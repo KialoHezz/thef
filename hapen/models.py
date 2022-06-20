@@ -59,3 +59,10 @@ class Posts(models.Model):
 	post = models.TextField(max_length=255)
 	date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
+	def __str__(self):
+		return self.post
+
+	@classmethod
+	def get_by_project(cls, id):
+			table = Projects.objects.get(project_id=id)
+			return table
