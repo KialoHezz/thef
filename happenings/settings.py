@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     # 'phonenumber_field',
     'crispy_forms',
     'location_field.apps.DefaultConfig',
+    'django_bootstrap5',
+
 
 
     # own
@@ -73,6 +75,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
+
             ],
         },
     },
@@ -144,3 +148,5 @@ LOGIN_REDIRECT_URL = 'home'
 
 LOGIN_URL = 'login'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
