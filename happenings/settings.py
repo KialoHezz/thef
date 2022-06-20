@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # third parties libraries
     'phonenumber_field',
     'crispy_forms',
+    'location_field.apps.DefaultConfig',
 
     # own
     'hapen',
