@@ -18,13 +18,15 @@ class NeighbourHood(models.Model):
 
 
 class User(models.Model):
-   
+	picture = models.ImageField(upload_to = 'userimages/', blank=True, null=True)
 	name = models.CharField(max_length=30)
 	email = models.EmailField(max_length=255)
 	NeighbourHood_id = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
 	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
-
-
+	
+	def __str__(self):
+  		return str(self.id)
+		
 	@classmethod
 	def get_by_user(cls, editor):
 		profile = cls.objects.filter(editor__username=editor).last()
