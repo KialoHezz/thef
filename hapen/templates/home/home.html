@@ -1,6 +1,10 @@
 {% extends "base/base.html" %}
 {% block content %}
 <div class="container">
-    
+    {% for busin in business %}
+    <h3>{{busin.name}}</h3>
+    <h6>{{busin.email}}</h6>
+
+    {% endfor %}
 </div>
 {% endblock %}
