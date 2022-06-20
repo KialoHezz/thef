@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load django_bootstrap5 %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,15 +13,18 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
-    <script src="{% static 'js/main.js' %}" defer></script>
+
+    {% block styles %} {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />{% endblock %}
+
+
   </head>
   <body>
     {% include "base/navbar.html" %}
-    <div class="containers">
-      <div class="form">{% block form %} {% endblock %}</div>
 
-      <div class="contented">{% block content %} {% endblock %}</div>
+      <div class="contented">{% block content %}{% block scripts %} {% bootstrap_javascript %} 
+        <script src="{% static 'js/main.js' %}" defer></script>
+        {% endblock %} {% endblock %}</div>
     </div>
 
     <script

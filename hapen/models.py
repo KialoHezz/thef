@@ -6,7 +6,7 @@ from location_field.models.plain import PlainLocationField
 
 
 class NeighbourHood(models.Model):
-
+	picture = models.ImageField(upload_to = 'hoodimages/', blank=True, null=True)
 	name = models.CharField(max_length=30)
 	location = PlainLocationField(based_fields=['city'], zoom=7)
 	Occupants_count = models.IntegerField(default=0)

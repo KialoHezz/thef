@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     # 'phonenumber_field',
     'crispy_forms',
     'location_field.apps.DefaultConfig',
+    'django_bootstrap5',
+
 
 
     # own
