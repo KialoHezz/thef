@@ -1,16 +1,16 @@
 {% extends "base/base.html" %} {% block content %}
 <div class="container">
   <div class="row">
-    {% if business %}
-    <h2>Found {{ business|length }} of searched term {{message}}</h2>
+    {% if busines %}
+    <h2>Found {{ busines|length }} of searched term {{message}}</h2>
     {% else %}
-    <h2>Found 0 business for the search term {{message}}</h2>
+    <h2>Found 0 busines for the search term {{message}}</h2>
     {% endif %}
   </div>
    <div class="row">
 
   {% if business %}
-    {% for busin in business %}
+    {% for busin in busines %}
       <div class="col-sm-6 col-md-3">
           <h1>{{busin.name}}</h1>
           <h1>{{busin.email}}</h1>

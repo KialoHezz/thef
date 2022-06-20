@@ -1,12 +1,18 @@
 from django.shortcuts import render
-from .models import Business
+from .models import Business, NeighbourHood, User
 
 # Create your views here.
 def home(request):
     context = {
-        "business": Business.objects.all(),
+        "busines": Business.objects.all(),
+        "business" : Business.get_all(),
+        "neighbourhood" : NeighbourHood.get_all()
     }
+    
+
+
     return render(request, 'home/home.html',context)
+
 
 def business_search(request):
     if 'search_business' in request.GET and request.GET['search_business']:
@@ -19,3 +25,17 @@ def business_search(request):
         message = "Your haven't search for any business"
 
     return render(request, 'home/business_search.html')
+
+
+# @login_required(login_url='/accounts/login/')
+def profile(request, editor):
+    profile = User.get_by_user(editor)
+    # projects = Projects.filter_by_user(user)
+    # title = profile.user
+
+    return render(request, 'profile/profile.html', {'profile': profile, "editor": editor})
+
+def neighbourhood(request, id):
+    neighbourhood = NeighbourHood.get_by_id(id)
+
+    return render(request, 'home/neighbourhood.html', {'neighbourhood': neighbourhood, "id": id})
