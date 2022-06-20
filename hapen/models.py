@@ -24,3 +24,8 @@ class Business(models.Model):
     email = models.EmailField(max_length=255)   
     user_name = models.ForeignKey(User, on_delete=models.CASCADE)  
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+
+    @classmethod
+    def search_by_title(cls,search_term):
+        busines = cls.objects.filter(title__icontains=search_term)
+        return busines
