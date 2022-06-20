@@ -9,6 +9,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('profile/<editor>', views.profile,name = 'profile'),
     path('neighbourhood/<id>', views.neighbourhood,name = 'neighbourhood'),
+    path('new/neighbourhood/', views.new_neighbourhood,name = 'new_neighbourhood'),
+
 
 
 ]

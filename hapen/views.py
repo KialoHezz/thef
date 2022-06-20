@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from .models import Business, NeighbourHood, User
+from django.shortcuts import render, redirect
+from .models import Business, Contacts, NeighbourHood, User
+from django.contrib.auth.decorators import login_required
+from .forms import BusinessForm, ContactsForm, NeighbourHoodForm, UserForm
 
 # Create your views here.
 def home(request):
@@ -25,5 +27,28 @@ def profile(request, editor):
 
 def neighbourhood(request, id):
     neighbourhood = NeighbourHood.get_by_id(id)
+    contacts = Contacts.get_by_neighbourhood(id)
+    return render(request, 'home/neighbourhood.html', {'neighbourhood': neighbourhood, "id": id,'contacts':contacts})
 
-    return render(request, 'home/neighbourhood.html', {'neighbourhood': neighbourhood, "id": id})
+
+@login_required(login_url='/accounts/login/')
+def new_neighbourhood(request):
+    current_user = request.user
+
+    if request.method == 'POST':
+
+        form = NeighbourHoodForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            upload = form.save(commit=False)
+            upload.user = current_user
+
+            upload.save()
+
+        return redirect('home')
+    else:
+        form = NeighbourHoodForm()
+
+    return render(request, 'home/new_neighbourhood.html', {'form': form, })
+

@@ -6,8 +6,10 @@
   </div>
   {% if user.is_authenticated %}
   <div>
-    <a class="navbar-brand" href="{% url 'profile' %}">profile</a>
+    <a class="navbar-brand" href="{% url 'profile' user %}">profile</a>
     <a class="navbar-brand" href="{% url 'logout' %}">logout</a>
+    <a class="btn btn-lg active" aria-current="page" href="{% url 'new_neighbourhood' %}">Add neighbourhood</a>
+
   </div>
 
   {% else %}
