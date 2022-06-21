@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light bg-light">
   <div>
-    <a class="navbar-brand">Home</a>
+    <a class="navbar-brand" href="/">Home</a>
     <a class="navbar-brand">Contact</a>
     <a class="navbar-brand">About</a>
   </div>
@@ -9,6 +9,7 @@
     <a class="navbar-brand" href="{% url 'profile' user %}">profile</a>
     <a class="navbar-brand" href="{% url 'logout' %}">logout</a>
     <a class="btn btn-lg active" aria-current="page" href="{% url 'new_neighbourhood' %}">Add neighbourhood</a>
+    <a class="btn btn-lg active" aria-current="page" href="{% url 'neighbourhood' user.neighbourhood_set %}">neighbourgood</a>
 
   </div>
 

@@ -11,6 +11,10 @@ class NeighbourHood(models.Model):
 	location = PlainLocationField(based_fields=['city'], zoom=7)
 	Occupants_count = models.IntegerField(default=0)
 	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
+	
+	def __str__(self):
+			return self.name
+
 
 	@classmethod
 	def get_all(cls):
@@ -22,11 +26,16 @@ class NeighbourHood(models.Model):
 			table = NeighbourHood.objects.get(id=id)
 			return table
 
+	@classmethod
+	def get_by_name(cls, name):
+			table = NeighbourHood.objects.get(name=name)
+			return table
+
 class User(models.Model):
 	picture = models.ImageField(upload_to = 'userimages/', blank=True, null=True)
 	name = models.CharField(max_length=30)
 	email = models.EmailField(max_length=255)
-	NeighbourHood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+	Neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
 	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
 	
 	def __str__(self):
@@ -69,7 +78,7 @@ class Posts(models.Model):
 		return table
 
 class Contacts(models.Model):
-	neighbourHood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
 	police = models.IntegerField()
 	hospital = models.IntegerField()
 	date = models.DateTimeField(auto_now_add=True, blank=True, null=True)

@@ -42,7 +42,7 @@ def new_neighbourhood(request):
         if form.is_valid():
 
             upload = form.save(commit=False)
-            upload.user = current_user
+            upload.editor = current_user
 
             upload.save()
 
@@ -51,4 +51,26 @@ def new_neighbourhood(request):
         form = NeighbourHoodForm()
 
     return render(request, 'home/new_neighbourhood.html', {'form': form, })
+
+
+@login_required(login_url='/accounts/login/')
+def new_profile(request):
+    current_user = request.user
+
+    if request.method == 'POST':
+
+        form = UserForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            upload = form.save(commit=False)
+            upload.editor = current_user
+
+            upload.save()
+
+        return redirect('home')
+    else:
+        form = UserForm()
+
+    return render(request, 'profile/new_profile.html', {'form': form, })
 

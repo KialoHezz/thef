@@ -1,5 +1,5 @@
 from django import forms
-from .models import Business, Contacts, NeighbourHood, User
+from .models import Business, Contacts, NeighbourHood, User, Posts
 
 
 class BusinessForm(forms.ModelForm):
@@ -22,3 +22,8 @@ class UserForm(forms.ModelForm):
 		class Meta:
 			model = User		
 			exclude = ['editor'] 	
+
+class PostsForm(forms.ModelForm):
+		class Meta:
+			model = Posts		
+			exclude = ['editor', 'neighbourhood','date'] 	
