@@ -1,17 +1,18 @@
 from django.shortcuts import render
-from .models import Business, NeighbourHood, User
+from .models import Business, NeighbourHood, User,Posts
+from .forms import CommentForm, PostForm
 
 # Create your views here.
 def home(request):
     context = {
         "busines": Business.objects.all(),
         "business" : Business.get_all(),
-        "neighbourhood" : NeighbourHood.get_all()
+        "neighbourhood" : NeighbourHood.get_all(),
+        "post":Posts.objects.all(),
     }
     
-
-
     return render(request, 'home/home.html',context)
+
 
 
 def business_search(request):
@@ -39,3 +40,19 @@ def neighbourhood(request, id):
     neighbourhood = NeighbourHood.get_by_id(id)
 
     return render(request, 'home/neighbourhood.html', {'neighbourhood': neighbourhood, "id": id})
+
+
+def add_comment(request):
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+    else:
+        form = CommentForm()
+    ctx ={
+        "form": CommentForm()
+    }
+    return render(request,'home/add_comment.html',ctx)
