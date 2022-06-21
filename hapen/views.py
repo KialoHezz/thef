@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from .models import Business, NeighbourHood, User
+from django.shortcuts import render, redirect
+from .models import Business, Contacts, NeighbourHood, User
+from django.contrib.auth.decorators import login_required
+from .forms import BusinessForm, ContactsForm, NeighbourHoodForm, UserForm, PostsForm
 
 # Create your views here.
 def home(request):
@@ -37,5 +39,94 @@ def profile(request, editor):
 
 def neighbourhood(request, id):
     neighbourhood = NeighbourHood.get_by_id(id)
+    contacts = Contacts.get_by_neighbourhood(id)
+    current_user = request.user
 
-    return render(request, 'home/neighbourhood.html', {'neighbourhood': neighbourhood, "id": id})
+    if request.method == 'POST':
+  
+        form = PostsForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = current_user
+            post.neighbourhood = neighbourhood
+            profiles = current_user.user_set.values()
+
+            for profile in profiles:
+                post.profile_id = profile['id']
+                form.save()
+        return redirect('neighbourhood', neighbourhood.id)
+    else:
+
+        form = PostsForm()
+
+    return render(request, 'home/neighbourhood.html', {'form':form, 'neighbourhood': neighbourhood, "id": id,'contacts':contacts})
+
+
+@login_required(login_url='/accounts/login/')
+def new_neighbourhood(request, id):
+    current_user = request.user
+
+    if request.method == 'POST':
+
+        form = NeighbourHoodForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            business = form.save(commit=False)
+            business.editor = current_user
+            business.neighbourhood = neighbourhood
+
+            business.save()
+
+        return redirect('home')
+    else:
+        form = NeighbourHoodForm()
+
+    return render(request, 'home/new_neighbourhood.html', {'form': form, })
+
+
+@login_required(login_url='/accounts/login/')
+def new_business(request, id):
+    neighbourhood = NeighbourHood.get_by_id(id)
+    current_user = request.user
+
+    if request.method == 'POST':
+
+        form = BusinessForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            upload = form.save(commit=False)
+            upload.editor = current_user
+            upload.neighbourhood = neighbourhood
+
+            upload.save()
+
+        return redirect('neighbourhood', neighbourhood.id)
+    else:
+        form = BusinessForm()
+
+    return render(request, 'home/new_business.html', {'form': form, 'neighbourhood': neighbourhood,})
+
+
+@login_required(login_url='/accounts/login/')
+def new_profile(request):
+    current_user = request.user
+
+    if request.method == 'POST':
+
+        form = UserForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            upload = form.save(commit=False)
+            upload.editor = current_user
+
+            upload.save()
+
+        return redirect('home')
+    else:
+        form = UserForm()
+
+    return render(request, 'profile/new_profile.html', {'form': form, })
+

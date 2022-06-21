@@ -9,6 +9,7 @@
     {% endfor %}
 
   {% for neighbourhood in neighbourhood%}
+  <a href="{% url 'neighbourhood' neighbourhood.id %}">
       <div class="hover hover-2 text-white rounded"><img src="{{neighbourhood.picture.url}} " alt="">
           <div class="hover-overlay"></div>
           <div class="hover-2-content px-5 py-4">
@@ -16,7 +17,7 @@
     <p class="hover-2-description  mb-0">{{neighbourhood.Occupants_count}}</p>
     <p class="hover-2-user  mb-0">{{project.user}}</p>
           </div>
-          </div>
+          </div></a>
     {% endfor%}
 
 </div>
