@@ -1,29 +1,42 @@
-<nav class="navbar navbar-light bg-light">
-  <div>
-    <a class="navbar-brand" href="{% url 'home' %}">Home</a>
-    <a class="navbar-brand">Contact</a>
-    <a class="navbar-brand">About</a>
-  </div>
-  {% if user.is_authenticated %}
-  <div>
-    <a class="navbar-brand" href="{% url 'profile' user %}">profile</a>
-    <a class="navbar-brand" href="{% url 'logout' %}">logout</a>
-    <a class="btn btn-lg active" aria-current="page" href="{% url 'new_neighbourhood' %}">Add neighbourhood</a>
-    <a class="btn btn-lg active" aria-current="page" href="{% url 'neighbourhood' user.neighbourhood_set.name %}">neighbourgood</a>
+{% load django_bootstrap5 %} {% load static%}
 
-  </div>
 
-  {% else %}
-  <div>
-    <a class="navbar-brand" href="{% url 'register' %}">register</a>
-    <a class="navbar-brand" href="{% url 'login' %}">Login</a>
-  </div>
-
-  {% endif %}
-  <form class="form-inline" role="search" action="{% url 'business_search'%} ">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search Business" name="business_search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-      Search
+<nav class="navbar ">
+  <div class="container-fluid">
+    <a href="{% url 'home' %}"><img class="navbar-logo" src="{% static 'images/flaticon.png' %}"
+        alt="image alt text" /></a>
+    <a class="navbar-brand" href="{% url 'home'%}" style="color: goldenrod;">Neighbourhood Watch</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <img src="{% static 'images/menu.png' %}">
     </button>
-  </form>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="btn btn-lg active" aria-current="page" href="{% url 'profile' user %}">Hello {{user}}</a>
+        </li>
+        <li class=" nav-item ">
+          <a class=" btn active " href="/logout ">Logout</a>
+        </li>
+        <li class="nav-item ">
+          <a class=" btn active " href="{% url 'new_neighbourhood'%} ">Add Neighbourhood</a>
+        </li>
+        {% else %}
+        <li class="nav-item ">
+          <a class=" btn active " href="/login ">Login</a>
+        </li>
+        <li class="nav-item ">
+          <a class='btn btn-default' href="/register ">Register</a> {% endif %}
+        </li>
+
+      </ul>
+      <form class="form-inline my-2 my-lg-0 justify-content-between " role="search"
+        action="{% url 'business_search'%} ">
+        <input class="form-control mr-sm-2 " type="search" placeholder="Search" aria-label="Search projects "
+          name="business_search">
+        <button class="btn  " type="submit">Search</button>
+      </form>
+    </div>
+  </div>
 </nav>
