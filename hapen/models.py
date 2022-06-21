@@ -56,9 +56,9 @@ class Business(models.Model):
 	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null= True)
 
 	@classmethod
-	def search_by_title(cls,search_term):
-		busines = cls.objects.filter(title__icontains=search_term)
-		return busines
+	def search_by_name(cls,search_term):
+		business = cls.objects.filter(name__icontains=search_term)
+		return business
 
 	@classmethod
 	def get_all(cls):

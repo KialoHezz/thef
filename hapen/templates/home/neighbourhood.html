@@ -28,21 +28,27 @@
           <a href="{% url 'new_business' neighbourhood.id%}"><button>Add business</button></a>
       </center>
       <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-interval="1">
-        <div class="carousel-inner row" >            
+        <center>
+        <h1>Local Business</h1>
+    </center>
+        <div class="carousel-inner row" style="display:grid ;" > 
+            <div   style="grid-template-columns: 1fr 1fr;">        
             {% for post in neighbourhood.business_set.all %}
-            <div class="carousel-item {% if forloop.counter == 1%}active{% endif %}" id="slide{{ forloop.counter }}"> 
+            <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}" id="slide{{ forloop.counter }}" > 
                 <div class="card d-flex position-relative flex-column">
                 <div class='imgContainer'>
                     <img src='{{post.picture.url}} '>
                 </div>
                 <div class="content">
-                    <h2>Card One</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eget velit tristique, sollicitudin leo viverra, suscipit neque. Aliquam ut facilisis urna, in pretium nibh.  Morbi in leo in eros commodo volutpat ac sed dolor.</p>
+                    <h2>{{post.name}}</h2>
+                    <h3>{{post.type}}</h2>
+                    <p>Phone Number - {{post.number}}</p>
+                    <p>email - {{post.email}}</p>
                 </div>
                 </div>
             </div>
             {% endfor%}
-
+        </div>   
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black;"></span>
