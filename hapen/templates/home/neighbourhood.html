@@ -19,21 +19,43 @@
   <div class="project-content">
       <center>
           <h1>{{neighbourhood.name}}</h1>
-          <p>By: {{neighbourhood.Occupants_count}}</p>
+          <p>No. of residents: {{neighbourhood.Occupants_count}}</p>
           <div class="ratings-container"  >
-            <p style="color: white;">Police Number  - {{contacts.police}}</p>
-            <p style="color: white;">Hospital Number  - {{contacts.hospital}}</p>
+            <p>Police Number  - {{contacts.police}}</p>
+            <p>Hospital Number  - {{contacts.hospital}}</p>
               </ul>
           </div>
       </center>
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-interval="1">
+        <div class="carousel-inner row" >            
+            {% for post in neighbourhood.business_set.all %}
+            <div class="carousel-item {% if forloop.counter == 1%}active{% endif %}" id="slide{{ forloop.counter }}"> 
+                <div class="card d-flex position-relative flex-column">
+                <div class='imgContainer'>
+                    <img src='{{post.picture.url}} '>
+                </div>
+                <div class="content">
+                    <h2>Card One</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eget velit tristique, sollicitudin leo viverra, suscipit neque. Aliquam ut facilisis urna, in pretium nibh.  Morbi in leo in eros commodo volutpat ac sed dolor.</p>
+                </div>
+                </div>
+            </div>
+            {% endfor%}
 
-      <p>{{project.description}}</p>
-      <center>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black;"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"style="background-color: black;"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+    </div>
 
-      </center>
       <div class=" row ">
         <div class=" col-sm-5 col-md-6 col-12 pb-4 ">
-            <h1>Comments</h1>
+            <h1>Posts</h1>
             {% for post in neighbourhood.posts_set.all %}
             <div class=" comment mt-4 text-justify float-left ">
                 <img src=" {{post.profile.picture.url}} " alt=" " class=" rounded-circle " width=" 40 "
@@ -212,6 +234,61 @@
             background-color: rgb(255, 255, 255);
         }
 
+
+        /* business */
+        .container .card
+{
+    max-width: 300px;
+    height: 215px;
+    margin: 30px 10px;
+    padding: 20px 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    transition: 0.3s ease-in-out;
+}
+.container .card:hover
+{
+    height: 450px;
+}
+.container .card .imgContainer
+{
+    position: relative;
+    width:250px;
+    height:250px;
+    top:-50px;
+    left:10px;
+    z-index: 1;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+.container .card .imgContainer img
+{
+    max-width: 100%;
+    border-radius: 4px;
+}
+.container .card .content
+{
+    position: relative;
+    margin-top: -140px;
+    padding: 10px 15px;
+    text-align: center;
+    color:#111;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s ease-in-out;
+}
+.container .card:hover .content
+{
+    visibility: visible;
+    opacity: 1;
+    margin-top: -40px;
+    transition-delay: 0.3s;
+}
+
+@media (max-width: 330px){
+    .container .card .imgContainer{
+        left: -2px;
+    }
+}
 
   </style>
 {% endblock%}

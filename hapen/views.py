@@ -53,10 +53,34 @@ def neighbourhood(request, id):
 @login_required(login_url='/accounts/login/')
 def new_neighbourhood(request):
     current_user = request.user
+    neighbourhood = NeighbourHood.get_by_id(id)
 
     if request.method == 'POST':
 
         form = NeighbourHoodForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            business = form.save(commit=False)
+            business.editor = current_user
+            business.neighbourhood = neighbourhood
+
+            business.save()
+
+        return redirect('home')
+    else:
+        form = NeighbourHoodForm()
+
+    return render(request, 'home/new_neighbourhood.html', {'form': form, })
+
+
+@login_required(login_url='/accounts/login/')
+def new_business(request):
+    current_user = request.user
+
+    if request.method == 'POST':
+
+        form = BusinessForm(request.POST, request.FILES)
 
         if form.is_valid():
 
@@ -67,9 +91,9 @@ def new_neighbourhood(request):
 
         return redirect('home')
     else:
-        form = NeighbourHoodForm()
+        form = BusinessForm()
 
-    return render(request, 'home/new_neighbourhood.html', {'form': form, })
+    return render(request, 'home/new_business.html', {'form': form, })
 
 
 @login_required(login_url='/accounts/login/')

@@ -49,8 +49,10 @@ class User(models.Model):
 class Business(models.Model):
 	picture = models.ImageField(upload_to = 'businessimages/', blank=True, null=True)
 	name = models.CharField(max_length=255)
+	type = models.CharField(max_length=255, blank=True, null= True)
 	email = models.EmailField(max_length=255)   
-	user_name = models.ForeignKey(User, on_delete=models.CASCADE)  
+	number = models.IntegerField(blank=True, null= True)
+	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
 	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null= True)
 
 	@classmethod
