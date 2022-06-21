@@ -5,10 +5,16 @@ from .forms import BusinessForm, ContactsForm, NeighbourHoodForm, UserForm, Post
 
 # Create your views here.
 def home(request):
-    business = Business.get_all()
-    neighbourhood = NeighbourHood.get_all()
+    context = {
+        "busines": Business.objects.all(),
+        "business" : Business.get_all(),
+        "neighbourhood" : NeighbourHood.get_all()
+    }
+    
 
-    return render(request, 'home/home.html',{'business': business, 'neighbourhood': neighbourhood})
+
+    return render(request, 'home/home.html',context)
+
 
 def business_search(request):
     print("This")

@@ -1,6 +1,13 @@
 {% extends "base/base.html" %} {% load django_bootstrap5 %}
 {% block content %}
 <div class="container">
+
+    {% for busin in busines %}
+    <h3>{{busin.name}}</h3>
+    <h6>{{busin.email}}</h6>
+
+    {% endfor %}
+
   {% for neighbourhood in neighbourhood%}
   <a href="{% url 'neighbourhood' neighbourhood.id %}">
       <div class="hover hover-2 text-white rounded"><img src="{{neighbourhood.picture.url}} " alt="">
@@ -16,7 +23,7 @@
 </div>
 
 </div>
-    
+
 </div>
 
 <style>
