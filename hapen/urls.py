@@ -12,7 +12,7 @@ urlpatterns = [
     path('new/neighbourhood/', views.new_neighbourhood,name = 'new_neighbourhood'),
     path('business/new/<id>', views.new_business,name = 'new_business'),
     path('profile/new/', views.new_profile,name = 'new_profile'),
-    path('business_search', views.business_search,name = 'business_search'),
+    path('business_search/', views.business_search,name = 'business_search'),
 
 
 

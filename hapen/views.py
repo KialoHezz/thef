@@ -11,10 +11,15 @@ def home(request):
     return render(request, 'home/home.html',{'business': business, 'neighbourhood': neighbourhood})
 
 def business_search(request):
-    if 'search_business' in request.GET and request.GET['search_business']:
-        search_term = request.GET.get('search_business')
+    print("This")
+    if 'business_search' in request.GET and request.GET['business_search']:
+        print("This far")
+        search_term = request.GET.get('business_search')
         business = Business.search_by_name(search_term)
-    return render(request, 'home/business_search.html',{'business':business})
+        return render(request, 'home/business_search.html',{'business':business})
+    else:
+        message = 'We have not found your search term'
+        return render(request, 'home/business_search.html', {'message': message})
 
 
 # @login_required(login_url='/accounts/login/')
