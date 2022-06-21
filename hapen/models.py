@@ -8,7 +8,7 @@ from location_field.models.plain import PlainLocationField
 class NeighbourHood(models.Model):
 	picture = models.ImageField(upload_to = 'hoodimages/', blank=True, null=True)
 	name = models.CharField(max_length=30)
-	location = PlainLocationField(based_fields=['city'], zoom=7)
+	location =  models.CharField(max_length=30, blank=True, null= True)
 	Occupants_count = models.IntegerField(default=0)
 	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
 	
@@ -56,9 +56,9 @@ class Business(models.Model):
 	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null= True)
 
 	@classmethod
-	def search_by_title(cls,search_term):
-		busines = cls.objects.filter(title__icontains=search_term)
-		return busines
+	def search_by_name(cls,search_term):
+		business = Business.objects.filter(name__icontains=search_term)
+		return business
 
 	@classmethod
 	def get_all(cls):

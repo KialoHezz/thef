@@ -17,16 +17,15 @@ def home(request):
 
 
 def business_search(request):
-    if 'search_business' in request.GET and request.GET['search_business']:
-        search_term = request.GET.get('search_business')
-        searched_business = Business.search_by_title(search_term)
-        message = f"{search_term}"
-
-        return render(request, 'home/business_search.html',{"message":message,"business": searched_business})
+    print("This")
+    if 'business_search' in request.GET and request.GET['business_search']:
+        print("This far")
+        search_term = request.GET.get('business_search')
+        business = Business.search_by_name(search_term)
+        return render(request, 'home/business_search.html',{'business':business})
     else:
-        message = "Your haven't search for any business"
-
-    return render(request, 'home/business_search.html')
+        message = 'We have not found your search term'
+        return render(request, 'home/business_search.html', {'message': message})
 
 
 # @login_required(login_url='/accounts/login/')
@@ -62,7 +61,7 @@ def neighbourhood(request, id):
     return render(request, 'home/neighbourhood.html', {'form':form, 'neighbourhood': neighbourhood, "id": id,'contacts':contacts})
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/login/')
 def new_neighbourhood(request, id):
     current_user = request.user
 
@@ -85,7 +84,7 @@ def new_neighbourhood(request, id):
     return render(request, 'home/new_neighbourhood.html', {'form': form, })
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/login/')
 def new_business(request, id):
     neighbourhood = NeighbourHood.get_by_id(id)
     current_user = request.user
@@ -109,7 +108,7 @@ def new_business(request, id):
     return render(request, 'home/new_business.html', {'form': form, 'neighbourhood': neighbourhood,})
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/login/')
 def new_profile(request):
     current_user = request.user
 
