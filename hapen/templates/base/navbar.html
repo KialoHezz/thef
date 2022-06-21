@@ -9,7 +9,7 @@
     <a class="navbar-brand" href="{% url 'profile' user %}">profile</a>
     <a class="navbar-brand" href="{% url 'logout' %}">logout</a>
     <a class="btn btn-lg active" aria-current="page" href="{% url 'new_neighbourhood' %}">Add neighbourhood</a>
-    <a class="btn btn-lg active" aria-current="page" href="{% url 'neighbourhood' user.neighbourhood_set %}">neighbourgood</a>
+    <a class="btn btn-lg active" aria-current="page" href="{% url 'neighbourhood' user.neighbourhood_set.name %}">neighbourgood</a>
 
   </div>
 

@@ -26,4 +26,4 @@ class UserForm(forms.ModelForm):
 class PostsForm(forms.ModelForm):
 		class Meta:
 			model = Posts		
-			exclude = ['editor', 'neighbourhood','date'] 	
+			exclude = ['editor', 'neighbourhood','profile'] 	

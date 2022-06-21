@@ -68,6 +68,7 @@ class Posts(models.Model):
 	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null= True)
 	post = models.TextField(max_length=255)
 	date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+	profile = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, null=True)
 
 	def __str__(self):
 		return self.post
@@ -88,5 +89,5 @@ class Contacts(models.Model):
 
 	@classmethod
 	def get_by_neighbourhood(cls, id):
-		table = Contacts.objects.get(neighbourHood_id=id)
+		table = Contacts.objects.get(neighbourhood_id=id)
 		return table
