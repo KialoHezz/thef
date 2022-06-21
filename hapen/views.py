@@ -13,6 +13,7 @@ def home(request):
 def business_search(request):
     print("This")
     if 'business_search' in request.GET and request.GET['business_search']:
+        print("This far")
         search_term = request.GET.get('business_search')
         business = Business.search_by_name(search_term)
         return render(request, 'home/business_search.html',{'business':business})
