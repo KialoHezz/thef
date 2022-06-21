@@ -51,9 +51,8 @@ def neighbourhood(request, id):
 
 
 @login_required(login_url='/accounts/login/')
-def new_neighbourhood(request):
+def new_neighbourhood(request, id):
     current_user = request.user
-    neighbourhood = NeighbourHood.get_by_id(id)
 
     if request.method == 'POST':
 
@@ -75,7 +74,8 @@ def new_neighbourhood(request):
 
 
 @login_required(login_url='/accounts/login/')
-def new_business(request):
+def new_business(request, id):
+    neighbourhood = NeighbourHood.get_by_id(id)
     current_user = request.user
 
     if request.method == 'POST':
@@ -86,14 +86,15 @@ def new_business(request):
 
             upload = form.save(commit=False)
             upload.editor = current_user
+            upload.neighbourhood = neighbourhood
 
             upload.save()
 
-        return redirect('home')
+        return redirect('neighbourhood', neighbourhood.id)
     else:
         form = BusinessForm()
 
-    return render(request, 'home/new_business.html', {'form': form, })
+    return render(request, 'home/new_business.html', {'form': form, 'neighbourhood': neighbourhood,})
 
 
 @login_required(login_url='/accounts/login/')

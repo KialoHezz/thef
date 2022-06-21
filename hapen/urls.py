@@ -10,7 +10,7 @@ urlpatterns = [
     path('profile/<editor>', views.profile,name = 'profile'),
     path('neighbourhood/<id>', views.neighbourhood,name = 'neighbourhood'),
     path('new/neighbourhood/', views.new_neighbourhood,name = 'new_neighbourhood'),
-    path('new/business/', views.new_business,name = 'new_business'),
+    path('business/new/<id>', views.new_business,name = 'new_business'),
     path('profile/new/', views.new_profile,name = 'new_profile'),
 
 
