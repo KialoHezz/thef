@@ -41,6 +41,7 @@ def neighbourhood(request, id):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = current_user
+            post.editor = current_user
             post.neighbourhood = neighbourhood
             profiles = current_user.user_set.values()
 
@@ -100,6 +101,29 @@ def new_business(request, id):
         form = BusinessForm()
 
     return render(request, 'home/new_business.html', {'form': form, 'neighbourhood': neighbourhood,})
+    
+@login_required(login_url='/login/')
+def new_contacts(request, id):
+    neighbourhood = NeighbourHood.get_by_id(id)
+    current_user = request.user
+
+    if request.method == 'POST':
+
+        form = ContactsForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            upload = form.save(commit=False)
+            upload.editor = current_user
+            upload.neighbourhood = neighbourhood
+
+            upload.save()
+
+        return redirect('neighbourhood', neighbourhood.id)
+    else:
+        form = ContactsForm()
+
+    return render(request, 'home/new_contacts.html', {'form': form, 'neighbourhood': neighbourhood,})
 
 
 @login_required(login_url='/login/')
