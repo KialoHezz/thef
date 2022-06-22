@@ -11,6 +11,11 @@ class NeighbourHood(models.Model):
 	name = models.CharField(max_length=30)
 	location = PlainLocationField(based_fields=['city'], zoom=7)
 	Occupants_count = models.IntegerField(default=0)
+	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
+	
+	def __str__(self):
+			return self.name
+
 
 	@classmethod
 	def get_all(cls):
@@ -22,26 +27,33 @@ class NeighbourHood(models.Model):
 			table = NeighbourHood.objects.get(id=id)
 			return table
 
+	@classmethod
+	def get_by_name(cls, name):
+			table = NeighbourHood.objects.get(name=name)
+			return table
+
 class User(models.Model):
 	picture = models.ImageField(upload_to = 'userimages/', blank=True, null=True)
 	name = models.CharField(max_length=30)
 	email = models.EmailField(max_length=255)
-	NeighbourHood_id = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+	Neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
 	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
 	
 	def __str__(self):
-  		return str(self.id)
-
+			return str(self.id)
 
 	@classmethod
 	def get_by_user(cls, editor):
-		profile = cls.objects.filter(editor__username=editor).last()
+		profile = User.objects.filter(editor__username=editor).last()
 		return profile
 
 class Business(models.Model):
+	picture = models.ImageField(upload_to = 'businessimages/', blank=True, null=True)
 	name = models.CharField(max_length=255)
+	type = models.CharField(max_length=255, blank=True, null= True)
 	email = models.EmailField(max_length=255)   
-	user_name = models.ForeignKey(User, on_delete=models.CASCADE)  
+	number = models.IntegerField(blank=True, null= True)
+	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
 	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null= True)
 
 	@classmethod
@@ -56,10 +68,12 @@ class Business(models.Model):
 
 class Posts(models.Model):
 	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
-	NeighbourHood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
 	name = models.CharField(max_length=255)
 	post = models.TextField()
+	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null= True)
+	post = models.TextField(max_length=255)
 	date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+	profile = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, null=True)
 
 
 	def __str__(self):
@@ -82,5 +96,21 @@ class Comment(models.Model):
     # class Meta:
     #     ordering = ['created_on']
 
-    def __str__(self):
-        return '%s - %s' % (self.post.title, self.name)
+def __str__(self):
+	table = NeighbourHood.objects.get(project_id=id)
+	return '%s - %s' % (self.post.title, self.name)
+
+class Contacts(models.Model):
+	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+	police = models.IntegerField()
+	hospital = models.IntegerField()
+	date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+	def __str__(self):
+		return str(self.id)
+
+	@classmethod
+	def get_by_neighbourhood(cls, id):
+		table = Contacts.objects.get(neighbourhood_id=id)
+		return table
+
