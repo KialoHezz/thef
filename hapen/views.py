@@ -151,8 +151,9 @@ def new_profile(request):
             upload.editor = current_user
 
             upload.save()
+            neighbourhood= upload.Neighbourhood
 
-        return redirect('home')
+        return redirect('neighbourhood' ,neighbourhood.id)
     else:
         form = UserForm()
 

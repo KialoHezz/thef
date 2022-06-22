@@ -1,0 +1,54 @@
+
+{% extends 'base/base.html'%}{% load static %} {% block content %} {{block.super}}
+<center>
+    <h3>Kindly edit your profile before proceeding.</h3>
+</center>
+<div class="row py-5 px-4">
+  <div class="col-xl-4 col-md-6 col-sm-10 mx-auto">
+      <!-- Profile widget -->
+      <div class="bg-white shadow rounded overflow-hidden">
+          <div class="px-4 pt-0 pb-4 bg-dark">
+              <div class="media align-items-end profile-header">
+                  <div class="profile mr-3"><img src="{{profile.picture.url}}" alt="..." width="130"
+                          class="rounded mb-2 img-thumbnail"> <span class="btn"><a href="{% url 'new_profile' %}">Edit Profile</a></span>    </div>
+                  <div class="media-body mb-5 text-white">
+                      <h4 class="mt-0 mb-0" style="margin: 4rem 0 3rem; padding: 0.5rem 0.5rem 0.5rem 0.5rem">{{profile.name}}</h4>
+                      <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i>{{profile.email}}</p>
+                      <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i></p>
+                  </div>
+                  
+              </div>
+          </div>
+
+          <div class="py-4 px-4">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h2>{{profile.NeighbourHood}}</h2>
+              </div>
+              <div class="row">
+                  {% for project in projects%}
+                  <div class="col-lg-6 mb-2 pr-lg-1">
+                      <div data-bs-toggle="modal" data-bs-target="#id{{project.id}}">
+                          <div class="hover hover-2 text-white rounded"><img src="{{project.image.url}} " alt="">
+                              <div class="hover-overlay"></div>
+                              <div class="hover-2-content px-5 py-4">
+                                  <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                          class="font-weight-light">{{project.title}}</h3>
+                                  <p class="hover-2-description  mb-0">{{project.description}}</p>
+                                  <p class="hover-2-user  mb-0">{{project.user}}</p>
+                              </div>
+                          </div>
+
+                      </div>
+
+                  </div>{% endfor%}
+              </div>
+
+          </div>
+      </div>
+      <!-- End profile widget -->
+
+  </div>
+</div>
+
+
+{% endblock%}
