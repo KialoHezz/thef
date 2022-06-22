@@ -57,7 +57,7 @@ def neighbourhood(request, id):
 
 
 @login_required(login_url='/login/')
-def new_neighbourhood(request, id):
+def new_neighbourhood(request):
     current_user = request.user
 
     if request.method == 'POST':

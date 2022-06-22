@@ -40,3 +40,22 @@ body{
 .btn:hover {
     color: #050801;
 }
+
+
+.form-group input,
+.form-group textarea {
+    background-color: black;
+    border-radius: 12px;
+}
+
+form {
+    width: 50vw;
+    background-color: #f4d00354;
+    border-color: #ecb21f;
+    border-style: solid;
+    border-width: 1px;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    border-radius: 5px;
+    padding: 20px;
+}
