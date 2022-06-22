@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User as Editor
-from location_field.models.plain import PlainLocationField
+# from location_field.models.plain import PlainLocationField
 from django.utils import timezone
 
 # Create your models here.

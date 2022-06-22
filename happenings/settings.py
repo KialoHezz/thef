@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # third parties libraries
     # 'phonenumber_field',
     'crispy_forms',
-    'location_field.apps.DefaultConfig',
+    # 'location_field.apps.DefaultConfig',
     'django_bootstrap5',
 
 
