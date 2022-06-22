@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User as Editor
 from location_field.models.plain import PlainLocationField
+from django.utils import timezone
 
 # Create your models here.
 
@@ -11,6 +12,7 @@ class NeighbourHood(models.Model):
 	location =  models.CharField(max_length=30)
 	Occupants_count = models.IntegerField(default=0)
 	editor = models.ForeignKey(Editor,on_delete=models.CASCADE)
+
 	
 	def __str__(self):
 			return self.name
@@ -37,6 +39,7 @@ class User(models.Model):
 	email = models.EmailField(max_length=255)
 	Neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
 	editor = models.ForeignKey(Editor,on_delete=models.CASCADE)
+
 	
 	def __str__(self):
 			return str(self.id)
@@ -47,9 +50,10 @@ class User(models.Model):
 		return profile
 
 class Business(models.Model):
-	picture = models.ImageField(upload_to = 'businessimages/')
+
+	picture = models.ImageField(upload_to='businessimages/', blank=True, null=True)
 	name = models.CharField(max_length=255)
-	type = models.CharField(max_length=255)
+	business_type = models.CharField(max_length=255)
 	email = models.EmailField(max_length=255)   
 	number = models.IntegerField()
 	editor = models.ForeignKey(Editor,on_delete=models.CASCADE)
@@ -77,8 +81,10 @@ class Posts(models.Model):
 
 	@classmethod
 	def get_by_project(cls, id):
+
 		table = NeighbourHood.objects.get(project_id=id)
 		return table
+
 
 class Contacts(models.Model):
 	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
@@ -86,10 +92,13 @@ class Contacts(models.Model):
 	hospital = models.IntegerField()
 	date = models.DateTimeField(auto_now_add=True)
 
+
 	def __str__(self):
 		return str(self.id)
 
 	@classmethod
 	def get_by_neighbourhood(cls, id):
+
 		table = Contacts.objects.filter(neighbourhood_id=id).last()
 		return table
+

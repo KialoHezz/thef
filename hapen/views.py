@@ -1,19 +1,19 @@
+
 from django.shortcuts import render, redirect
-from .models import Business, Contacts, NeighbourHood, User
+from .models import Business, Contacts, NeighbourHood, User,Posts
 from django.contrib.auth.decorators import login_required
 from .forms import BusinessForm, ContactsForm, NeighbourHoodForm, UserForm, PostsForm
 
 # Create your views here.
 def home(request):
     context = {
-        "busines": Business.objects.all(),
         "business" : Business.get_all(),
-        "neighbourhood" : NeighbourHood.get_all()
+        "neighbourhood" : NeighbourHood.get_all(),
+        "post":Posts.objects.all(),
     }
     
-
-
     return render(request, 'home/home.html',context)
+
 
 
 def business_search(request):
@@ -28,6 +28,7 @@ def business_search(request):
         return render(request, 'home/business_search.html', {'message': message})
 
 
+
 # @login_required(login_url='/accounts/login/')
 def profile(request, editor):
     profile = User.get_by_user(editor)
@@ -35,6 +36,7 @@ def profile(request, editor):
     # title = profile.user
 
     return render(request, 'profile/profile.html', {'profile': profile, "editor": editor})
+
 
 def neighbourhood(request, id):
     neighbourhood = NeighbourHood.get_by_id(id)
@@ -60,6 +62,7 @@ def neighbourhood(request, id):
         form = PostsForm()
 
     return render(request, 'home/neighbourhood.html', {'form':form, 'neighbourhood': neighbourhood, "id": id,'contacts':contacts})
+
 
 
 @login_required(login_url='/login/')
@@ -107,6 +110,7 @@ def new_business(request, id):
         form = BusinessForm()
 
     return render(request, 'home/new_business.html', {'form': form, 'neighbourhood': neighbourhood,})
+
     
 @login_required(login_url='/login/')
 def new_contacts(request, id):
@@ -133,6 +137,7 @@ def new_contacts(request, id):
 
 
 @login_required(login_url='/login/')
+
 def new_profile(request):
     current_user = request.user
 
@@ -152,4 +157,3 @@ def new_profile(request):
         form = UserForm()
 
     return render(request, 'profile/new_profile.html', {'form': form, })
-

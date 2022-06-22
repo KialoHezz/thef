@@ -2,30 +2,22 @@
 {% block content %}{{block.super}}
 <div class="container">
 
-    {% for busin in busines %}
-    <h3>{{busin.name}}</h3>
-    <h6>{{busin.email}}</h6>
+    <div class="body">
 
-    {% endfor %}
-
-  {% for neighbourhood in neighbourhood%}
-  <a href="{% url 'neighbourhood' neighbourhood.id %}">
-      <div class="hover hover-2 text-white rounded"><img src="{{neighbourhood.picture.url}} " alt="">
-          <div class="hover-overlay"></div>
-          <div class="hover-2-content px-5 py-4">
-              <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span class="font-weight-light">{{neighbourhood.name}}</h3>
-    <h4 class="hover-2-description  mb-0"><strong>Location: </strong>{{neighbourhood.location}}</h4>
-    <p class="hover-2-user  mb-0"><strong>Residents: </strong>{{neighbourhood.Occupants_count}}</p>
-          </div>
-          </div></a>
-    {% endfor%}
+        {% for neighbourhood in neighbourhood%}
+        <a href="{% url 'neighbourhood' neighbourhood.id %}">
+            <div class="hover hover-2 text-white rounded"><img src="{{neighbourhood.picture.url}} " alt="">
+                <div class="hover-overlay"></div>
+                <div class="hover-2-content px-5 py-4">
+                    <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span class="font-weight-light">{{neighbourhood.name}}</h3>
+          <h4 class="hover-2-description  mb-0"><strong>Location: </strong>{{neighbourhood.location}}</h4>
+          <p class="hover-2-user  mb-0"><strong>Residents: </strong>{{neighbourhood.Occupants_count}}</p>
+                </div>
+                </div></a>
+          {% endfor%}
+    </div>
 
 </div>
-
-</div>
-
-</div>
-
 <style>
   .body {
       display: grid;
@@ -138,5 +130,6 @@
       background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1));
   }
 
-  </style>
+</style>
+  
 {% endblock %}

@@ -90,10 +90,11 @@ WSGI_APPLICATION = 'happenings.wsgi.application'
 
 DATABASES = {
     'default': {
+
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neighbourhood',
-        'USER': 'mariga',
-    'PASSWORD':'password',
+        'NAME': 'neighbourhoods',
+        'USER': 'hezzykialo',
+        'PASSWORD':'12345',
     }
 }
 

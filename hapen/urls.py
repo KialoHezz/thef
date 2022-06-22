@@ -15,8 +15,6 @@ urlpatterns = [
     path('contacts/new/<id>', views.new_contacts,name = 'new_contacts'),
     path('business_search/', views.business_search,name = 'business_search'),
 
-
-
 ]
 
 if settings.DEBUG:
