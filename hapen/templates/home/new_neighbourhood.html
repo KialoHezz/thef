@@ -3,7 +3,7 @@
 
 {{block.super}}
 <center>
-  <h2 style="color: white;margin-bottom: 50px;">Kindly Upload your new project below</h2>
+  <h2 style="color: white;margin-bottom: 50px;">Kindly Upload your new Neighbourhood below</h2>
   <div class=" form col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4 ">
     <form action=" {%url 'new_neighbourhood'%} " method="POST" enctype="multipart/form-data">
       {%csrf_token%} {% bootstrap_form form%}

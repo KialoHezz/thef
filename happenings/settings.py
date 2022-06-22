@@ -92,9 +92,9 @@ DATABASES = {
     'default': {
 
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neighbourhood',
+        'NAME': 'neighbourhoods',
         'USER': 'hezzykialo',
-    'PASSWORD':'12345',
+        'PASSWORD':'12345',
     }
 }
 

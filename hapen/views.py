@@ -1,11 +1,8 @@
-from django.shortcuts import render
-from .models import Business, NeighbourHood, User,Posts
-from .forms import CommentForm, PostForm
+
 from django.shortcuts import render, redirect
-from .models import Business, Contacts, NeighbourHood, User
+from .models import Business, Contacts, NeighbourHood, User,Posts
 from django.contrib.auth.decorators import login_required
 from .forms import BusinessForm, ContactsForm, NeighbourHoodForm, UserForm, PostsForm
-
 
 # Create your views here.
 def home(request):
@@ -20,16 +17,15 @@ def home(request):
 
 
 def business_search(request):
-    if 'search_business' in request.GET and request.GET['search_business']:
-        search_term = request.GET.get('search_business')
-        searched_business = Business.search_by_title(search_term)
-        message = f"{search_term}"
-
-        return render(request, 'home/business_search.html',{"message":message,"business": searched_business})
+    print("This")
+    if 'business_search' in request.GET and request.GET['business_search']:
+        print("This far")
+        search_term = request.GET.get('business_search')
+        business = Business.search_by_name(search_term)
+        return render(request, 'home/business_search.html',{'business':business})
     else:
-        message = "Your haven't search for any business"
-
-    return render(request, 'home/business_search.html')
+        message = 'We have not found your search term'
+        return render(request, 'home/business_search.html', {'message': message})
 
 
 
@@ -53,6 +49,7 @@ def neighbourhood(request, id):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = current_user
+            post.editor = current_user
             post.neighbourhood = neighbourhood
             profiles = current_user.user_set.values()
 
@@ -67,8 +64,9 @@ def neighbourhood(request, id):
     return render(request, 'home/neighbourhood.html', {'form':form, 'neighbourhood': neighbourhood, "id": id,'contacts':contacts})
 
 
-@login_required(login_url='/accounts/login/')
-def new_neighbourhood(request, id):
+
+@login_required(login_url='/login/')
+def new_neighbourhood(request):
     current_user = request.user
 
     if request.method == 'POST':
@@ -90,7 +88,7 @@ def new_neighbourhood(request, id):
     return render(request, 'home/new_neighbourhood.html', {'form': form, })
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/login/')
 def new_business(request, id):
     neighbourhood = NeighbourHood.get_by_id(id)
     current_user = request.user
@@ -113,8 +111,33 @@ def new_business(request, id):
 
     return render(request, 'home/new_business.html', {'form': form, 'neighbourhood': neighbourhood,})
 
+    
+@login_required(login_url='/login/')
+def new_contacts(request, id):
+    neighbourhood = NeighbourHood.get_by_id(id)
+    current_user = request.user
 
-@login_required(login_url='/accounts/login/')
+    if request.method == 'POST':
+
+        form = ContactsForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            upload = form.save(commit=False)
+            upload.editor = current_user
+            upload.neighbourhood = neighbourhood
+
+            upload.save()
+
+        return redirect('neighbourhood', neighbourhood.id)
+    else:
+        form = ContactsForm()
+
+    return render(request, 'home/new_contacts.html', {'form': form, 'neighbourhood': neighbourhood,})
+
+
+@login_required(login_url='/login/')
+
 def new_profile(request):
     current_user = request.user
 
@@ -134,23 +157,3 @@ def new_profile(request):
         form = UserForm()
 
     return render(request, 'profile/new_profile.html', {'form': form, })
-
-
-    return render(request, 'home/neighbourhood.html', {'neighbourhood': neighbourhood, "id": id})
-
-
-def add_comment(request):
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-
-    else:
-        form = CommentForm()
-    ctx ={
-        "form": CommentForm()
-    }
-    return render(request,'home/add_comment.html',ctx)
-

@@ -1,23 +1,80 @@
-{% extends "base/base.html" %} {% block content %}
-<div class="container">
-  <div class="row">
-    {% if busines %}
-    <h2>Found {{ busines|length }} of searched term {{message}}</h2>
-    {% else %}
-    <h2>Found 0 busines for the search term {{message}}</h2>
-    {% endif %}
-  </div>
-   <div class="row">
+{% extends 'base/base.html'%}{% load django_bootstrap5 %} {% block content %}{{block.super}}
 
-  {% if business %}
-    {% for busin in busines %}
-      <div class="col-sm-6 col-md-3">
-          <h1>{{busin.name}}</h1>
-          <h1>{{busin.email}}</h1>
 
-      </div>
+<h2>{{message}}</h2>
+
+<div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
+  <div class="card d-flex position-relative flex-column">
+    {% for post in business%}
+    <div class='imgContainer'>
+      <img src='{{post.picture.url}} ' style="padding: 2rem;">
+    </div>
+    <div class="content">
+      <h2>{{post.name}}</h2>
+      <h3>{{post.type}}</h2>
+        <h4>Neighbourhood: {{post.neighbourhood}}</h4>
+          <p>Phone Number - {{post.number}}</p>
+          <p>email - {{post.email}}</p>
+    </div>
     {% endfor %}
-  {% endif %}
   </div>
+
 </div>
-{% endblock %}
+
+
+<style>
+  .container .card {
+    max-width: 300px;
+    height: 215px;
+    margin: 30px 10px;
+    padding: 20px 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    transition: 0.3s ease-in-out;
+  }
+
+  .container .card:hover {
+    height: 450px;
+  }
+
+  .container .card .imgContainer {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    top: -50px;
+    left: 10px;
+    z-index: 1;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .container .card .imgContainer img {
+    max-width: 100%;
+    border-radius: 4px;
+  }
+
+  .container .card .content {
+    position: relative;
+    margin-top: -140px;
+    padding: 10px 15px;
+    text-align: center;
+    color: #111;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s ease-in-out;
+  }
+
+  .container .card:hover .content {
+    visibility: visible;
+    opacity: 1;
+    margin-top: -40px;
+    transition-delay: 0.3s;
+  }
+
+  @media (max-width: 330px) {
+    .container .card .imgContainer {
+      left: -2px;
+    }
+  }
+</style>
+
+{% endblock%}

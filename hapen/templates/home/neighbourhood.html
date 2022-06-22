@@ -2,294 +2,361 @@
 {% block content %}{{block.super}}
 
 <div class="col-lg-6 mb-3 mb-lg-0">
-  <div class="hover hover-3 text-white rounded"><img src="{{neighbourhood.picture.url}}" alt="">
-      <div class="hover-overlay"></div>
-      <div class="hover-3-content px-5 py-4">
-          <h3 class="hover-3-title text-uppercase font-weight-bold mb-1"><span
-                  class="font-weight-light">{{neighbourhood.name}}</h3>
-          <center>
-              <a href="{{neighbourhood.link}}" class=" btn hover-3-description small text-uppercase mb-0"
-                  style="margin-top:30px;">Visit Site</a>
-          </center>
-      </div>
-  </div>
+    <div class="hover hover-3 text-white rounded"><img src="{{neighbourhood.picture.url}}" alt="">
+        <div class="hover-overlay"></div>
+        <div class="hover-3-content px-5 py-4">
+            <h3 class="hover-3-title text-uppercase font-weight-bold mb-1"><span
+                    class="font-weight-light">{{neighbourhood.name}}</h3>
+
+        </div>
+    </div>
 </div>
 
 <div class="container">
-  <div class="project-content">
-      <center>
-          <h1>{{neighbourhood.name}}</h1>
-          <p>No. of residents: {{neighbourhood.Occupants_count}}</p>
-          <div class="ratings-container"  >
-            <p>Police Number  - {{contacts.police}}</p>
-            <p>Hospital Number  - {{contacts.hospital}}</p>
-              </ul>
-          </div>
-          <a href="{% url 'new_business' neighbourhood.id%}"><button>Add business</button></a>
-      </center>
-      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-interval="1">
-        <div class="carousel-inner row" >            
-            {% for post in neighbourhood.business_set.all %}
-            <div class="carousel-item {% if forloop.counter == 1%}active{% endif %}" id="slide{{ forloop.counter }}"> 
-                <div class="card d-flex position-relative flex-column">
-                <div class='imgContainer'>
-                    <img src='{{post.picture.url}} '>
+    <div class="project-content">
+        <div class="info-container">
+
+            <center>
+                <h1>{{neighbourhood.name}}</h1>
+                <p><strong>No. of residents:</strong> {{neighbourhood.Occupants_count}}</p>
+                <p><strong>Police Number</strong> - {{contacts.police}}</p>
+                <p><strong>Hospital Number</strong> - {{contacts.hospital}}</p>
+                </ul>
+                <a href="{% url 'new_contacts' neighbourhood.id%}"><button class="btn ">Edit contacts</button></a>
+
+        </div>
+        <div class="business_info">
+            </center>
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-interval="1">
+                <center>
+                    <h1>Local Business</h1>
+                <div class="carousel-inner row" style="display:grid ;">
+                    <div style="grid-template-columns: 1fr 1fr;">
+                        {% for post in neighbourhood.business_set.all %}
+                        <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}"
+                            id="slide{{ forloop.counter }}">
+                            <div class="card d-flex position-relative flex-column">
+                                <div class='imgContainer'>
+                                    <img src='{{post.picture.url}} '>
+                                </div>
+                                <div class="content">
+                                    <h2>{{post.name}}</h2>
+                                    <h3>{{post.type}}</h2>
+                                        <p><strong>Phone Number </strong>- {{post.number}}</p>
+                                        <p><strong>email </strong>- {{post.email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor%}
+                    </div>
+                    <a href="{% url 'new_business' neighbourhood.id%}"><button class="btn ">Add business</button></a>
+
                 </div>
-                <div class="content">
-                    <h2>Card One</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eget velit tristique, sollicitudin leo viverra, suscipit neque. Aliquam ut facilisis urna, in pretium nibh.  Morbi in leo in eros commodo volutpat ac sed dolor.</p>
-                </div>
-                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black;"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black;"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-            {% endfor%}
-
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black;"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"style="background-color: black;"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-    </div>
+    </center>
 
-      <div class=" row ">
-        <div class=" col-sm-5 col-md-6 col-12 pb-4 ">
-            <h1>Posts</h1>
-            {% for post in neighbourhood.posts_set.all %}
-            <div class=" comment mt-4 text-justify float-left ">
-                <img src=" {{post.profile.picture.url}} " alt=" " class=" rounded-circle " width=" 40 "
-                    height=" 40 ">
-                <h4>{{ post.profile.name}}</h4>
-                <span>{{ post.date}}</span>
-                <br>
-                <p>{{ post.post}}</p>
+        <div class=" row ">
+            <div class=" col-sm-5 col-md-6 col-12 pb-4 ">
+                <h1>Posts</h1>
+                {% for post in neighbourhood.posts_set.all %}
+                <div class=" comment mt-4 text-justify float-left ">
+                    <img src=" {{post.profile.picture.url}} " alt=" " class=" rounded-circle " width=" 40 "
+                        height=" 40 ">
+                    <h4>{{ post.profile.name}}</h4>
+                    <span>{{ post.date}}</span>
+                    <br>
+                    <p>{{ post.post}}</p>
+                </div>
+                {% endfor%}
             </div>
-            {% endfor%}
-        </div>
-        <div class=" form col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4 ">
-            <form action=" {%url 'neighbourhood' neighbourhood.id%} " method="POST">
-                {%csrf_token%} {% bootstrap_form form%}
-                <button type=" submit " id="comment_button" class=" btn btn-lg " value=" Post ">Post</button>
-            </form>
+            <div class=" form col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4 ">
+                <form action=" {%url 'neighbourhood' neighbourhood.id%} " method="POST">
+                    {%csrf_token%} {% bootstrap_form form%}
+                    <button type=" submit " id="comment_button" class=" btn btn-lg " value=" Post ">Post</button>
+                </form>
 
+            </div>
         </div>
     </div>
-  </div>
 </div>
+
+
 <style>
-/* hover */
-.hover {
-            overflow: hidden;
-            position: relative;
-            padding-bottom: 60%;
-            width: 98.5vw;
-            height: 100%;
-            object-fit: contain;
-        }
+    .business_info {
+        padding: 30px;
+        margin: 50px 0px 50px 0px;
+        background-color: #ecb21f6d;
 
-        .hover-overlay {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 90;
-            transition: all 0.4s;
-        }
-
-        .hover img {
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transition: all 0.3s;
-        }
-
-        .hover-content {
-            position: relative;
-            z-index: 99;
-        }
-
-        .hover-3::after {
-            content: ' ';
-
-            top: 17.9rem;
-            left: 25rem;
-            z-index: 90;
-            transition: all 0.3s;
-            transform: scale(1.1);
-            opacity: 0;
-            display: block;
-            opacity: 0;
-        }
-
-        .hover-3-content {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            transform: translateY(-50%);
-            text-align: center;
-            z-index: 99;
-        }
-
-        .hover-3-description {
-            opacity: 0;
-            transform: scale(1.3);
-            transition: all 0.3s;
-        }
-
-        .hover-3 img {
-            width: 110%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .hover-3 .hover-overlay {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .hover-3:hover img {
-            width: 100%;
-        }
-
-        .hover-3:hover::after {
-            opacity: 1;
-            transform: none;
-        }
-
-        .hover-3:hover .hover-3-description {
-            width: 140px;
-            border-style: solid;
-            border-color: white;
-            border-width: 1px;
-            padding: 10px 0px 10px 0px;
-            opacity: 1;
-            transform: none;
-        }
-
-        .hover-3:hover .hover-overlay {
-            background: rgba(0, 0, 0, 0.8);
-        }
-
-
-        /* Comments */
-
-        .navbar-nav {
-            width: 100%;
-        }
-
-        @media(min-width:568px) {
-            .end {
-                margin-left: auto;
-            }
-        }
-
-        @media(max-width:768px) {
-            #post {
-                width: 100%;
-            }
-        }
-
-        #clicked {
-            padding-top: 1px;
-            padding-bottom: 1px;
-            text-align: center;
-            width: 100%;
-            background-color: #ecb21f;
-            border-color: #a88734 #9c7e31 #846a29;
-            color: black;
-            border-width: 1px;
-            border-style: solid;
-            border-radius: 13px;
-        }
-
-        #profile {
-            background-color: unset;
-
-        }
-
-        #post {
-            margin: 10px;
-            padding: 6px;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            text-align: center;
-            background-color: #ecb21f;
-            border-color: #a88734 #9c7e31 #846a29;
-            color: black;
-            border-width: 1px;
-            border-style: solid;
-            border-radius: 13px;
-            width: 50%;
-        }
-
-
-        #nav-items li a,
-        #profile {
-            text-decoration: none;
-            color: rgb(224, 219, 219);
-            background-color: rgb(255, 255, 255);
-        }
-
-
-        /* business */
-        .container .card
-{
-    max-width: 300px;
-    height: 215px;
-    margin: 30px 10px;
-    padding: 20px 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-    transition: 0.3s ease-in-out;
-}
-.container .card:hover
-{
-    height: 450px;
-}
-.container .card .imgContainer
-{
-    position: relative;
-    width:250px;
-    height:250px;
-    top:-50px;
-    left:10px;
-    z-index: 1;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-}
-.container .card .imgContainer img
-{
-    max-width: 100%;
-    border-radius: 4px;
-}
-.container .card .content
-{
-    position: relative;
-    margin-top: -140px;
-    padding: 10px 15px;
-    text-align: center;
-    color:#111;
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.3s ease-in-out;
-}
-.container .card:hover .content
-{
-    visibility: visible;
-    opacity: 1;
-    margin-top: -40px;
-    transition-delay: 0.3s;
-}
-
-@media (max-width: 330px){
-    .container .card .imgContainer{
-        left: -2px;
     }
-}
 
-  </style>
+    /* hover */
+    .hover {
+        overflow: hidden;
+        position: relative;
+        padding-bottom: 60%;
+        width: 98.5vw;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .hover-overlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 90;
+        transition: all 0.4s;
+    }
+
+    .hover img {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.3s;
+    }
+
+    .hover-content {
+        position: relative;
+        z-index: 99;
+    }
+
+    .hover-3::after {
+        content: ' ';
+
+        top: 17.9rem;
+        left: 25rem;
+        z-index: 90;
+        transition: all 0.3s;
+        transform: scale(1.1);
+        opacity: 0;
+        display: block;
+        opacity: 0;
+    }
+
+    .hover-3-content {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        transform: translateY(-50%);
+        text-align: center;
+        z-index: 99;
+    }
+
+    .hover-3-description {
+        opacity: 0;
+        transform: scale(1.3);
+        transition: all 0.3s;
+    }
+
+    .hover-3 img {
+        width: 110%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .hover-3 .hover-overlay {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .hover-3:hover img {
+        width: 100%;
+    }
+
+    .hover-3:hover::after {
+        opacity: 1;
+        transform: none;
+    }
+
+    .hover-3:hover .hover-3-description {
+        width: 140px;
+        border-style: solid;
+        border-color: white;
+        border-width: 1px;
+        padding: 10px 0px 10px 0px;
+        opacity: 1;
+        transform: none;
+    }
+
+    .hover-3:hover .hover-overlay {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+
+
+    /* business */
+    .container .card {
+        max-width: 300px;
+        height: 215px;
+        margin: 30px 10px;
+        padding: 20px 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        transition: 0.3s ease-in-out;
+    }
+
+    .container .card:hover {
+        height: 450px;
+    }
+
+    .container .card .imgContainer {
+        position: relative;
+        width: 250px;
+        height: 250px;
+        top: -50px;
+        left: 10px;
+        z-index: 1;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .container .card .imgContainer img {
+        max-width: 100%;
+        border-radius: 4px;
+    }
+
+    .container .card .content {
+        position: relative;
+        margin-top: -140px;
+        padding: 10px 15px;
+        text-align: center;
+        color: #111;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s ease-in-out;
+    }
+
+    .container .card:hover .content {
+        visibility: visible;
+        opacity: 1;
+        margin-top: -40px;
+        transition-delay: 0.3s;
+    }
+
+    @media (max-width: 330px) {
+        .container .card .imgContainer {
+            left: -2px;
+
+        }
+    }
+
+
+    /* Comments */
+
+
+    .comments {
+        margin-top: 5%;
+        margin-left: 20px;
+    }
+
+    .darker {
+        border: 1px solid #ecb21f;
+        background-color: black;
+        float: right;
+        border-radius: 5px;
+        padding-left: 40px;
+        padding-right: 30px;
+        padding-top: 10px;
+    }
+
+    .comment {
+        border: 1px solid #f4b0037b;
+        background-color: #f4d00354;
+        float: left;
+        border-radius: 5px;
+        padding-left: 40px;
+        padding-right: 30px;
+        padding-top: 10px;
+
+    }
+
+    .comment h4,
+    .comment span,
+    .darker h4,
+    .darker span {
+        display: inline;
+        color: rgba(36, 36, 36, 0.545);
+
+    }
+
+    .comment p,
+    .comment span,
+    .darker p,
+    .darker span {
+        color: rgb(36, 36, 36);
+    }
+
+
+
+    h4 {
+        color: white;
+        font-weight: bold;
+    }
+
+    label {
+        color: rgb(212, 208, 208);
+    }
+
+    #align-form {
+        margin-top: 20px;
+    }
+
+    .form-group p a {
+        color: white;
+    }
+
+    #checkbx {
+        background-color: black;
+    }
+
+    #darker img {
+        margin-right: 15px;
+        position: static;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        background-color: black;
+        border-radius: 12px;
+    }
+
+    form {
+        background-color: #f4d00354;
+        color: rgb(0, 0, 0);
+        border-radius: 10px;
+        border-radius: 5px;
+        padding: 20px;
+    }
+
+    .btn {
+        margin: 5px;
+        background-color: #ecb21f;
+        border-style: solid;
+        width: fit-content;
+        padding: 10px 10px;
+        color: white;
+        font-size: 12px;
+        text-transform: uppercase;
+        transition: 0.5s;
+        letter-spacing: 4px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        color: #050801;
+    }
+</style>
 {% endblock%}

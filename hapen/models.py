@@ -7,11 +7,12 @@ from django.utils import timezone
 
 
 class NeighbourHood(models.Model):
-	picture = models.ImageField(upload_to = 'hoodimages/', blank=True, null=True)
+	picture = models.ImageField(upload_to = 'hoodimages/')
 	name = models.CharField(max_length=30)
-	location = PlainLocationField(based_fields=['city'], zoom=7)
+	location =  models.CharField(max_length=30)
 	Occupants_count = models.IntegerField(default=0)
-	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
+	editor = models.ForeignKey(Editor,on_delete=models.CASCADE)
+
 	
 	def __str__(self):
 			return self.name
@@ -33,11 +34,12 @@ class NeighbourHood(models.Model):
 			return table
 
 class User(models.Model):
-	picture = models.ImageField(upload_to = 'userimages/', blank=True, null=True)
+	picture = models.ImageField(upload_to = 'userimages/')
 	name = models.CharField(max_length=30)
 	email = models.EmailField(max_length=255)
 	Neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
-	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
+	editor = models.ForeignKey(Editor,on_delete=models.CASCADE)
+
 	
 	def __str__(self):
 			return str(self.id)
@@ -48,18 +50,19 @@ class User(models.Model):
 		return profile
 
 class Business(models.Model):
-	picture = models.ImageField(upload_to = 'businessimages/', blank=True, null=True)
+
+	picture = models.ImageField(upload_to='businessimages/', blank=True, null=True)
 	name = models.CharField(max_length=255)
-	type = models.CharField(max_length=255, blank=True, null= True)
+	business_type = models.CharField(max_length=255)
 	email = models.EmailField(max_length=255)   
-	number = models.IntegerField(blank=True, null= True)
-	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
-	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null= True)
+	number = models.IntegerField()
+	editor = models.ForeignKey(Editor,on_delete=models.CASCADE)
+	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
 
 	@classmethod
-	def search_by_title(cls,search_term):
-		busines = cls.objects.filter(title__icontains=search_term)
-		return busines
+	def search_by_name(cls,search_term):
+		business = Business.objects.filter(name__icontains=search_term)
+		return business
 
 	@classmethod
 	def get_all(cls):
@@ -67,50 +70,35 @@ class Business(models.Model):
 		return business
 
 class Posts(models.Model):
-	editor = models.ForeignKey(Editor,on_delete=models.CASCADE, blank=True, null= True)
-	name = models.CharField(max_length=255)
-	post = models.TextField()
-	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null= True)
+	editor = models.ForeignKey(Editor,on_delete=models.CASCADE)
+	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
 	post = models.TextField(max_length=255)
-	date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-	profile = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, null=True)
-
+	date = models.DateTimeField(auto_now_add=True)
+	profile = models.ForeignKey(User,on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.post
 
 	@classmethod
 	def get_by_project(cls, id):
-			table = NeighbourHood.objects.get(project_id=id)
-			return table
 
+		table = NeighbourHood.objects.get(project_id=id)
+		return table
 
-# Create your models here.
-class Comment(models.Model):
-    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name="comments")
-    name = models.CharField(max_length=255)
-    content = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
-    
-
-    # class Meta:
-    #     ordering = ['created_on']
-
-def __str__(self):
-	table = NeighbourHood.objects.get(project_id=id)
-	return '%s - %s' % (self.post.title, self.name)
 
 class Contacts(models.Model):
 	neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
 	police = models.IntegerField()
 	hospital = models.IntegerField()
-	date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+	date = models.DateTimeField(auto_now_add=True)
+
 
 	def __str__(self):
 		return str(self.id)
 
 	@classmethod
 	def get_by_neighbourhood(cls, id):
-		table = Contacts.objects.get(neighbourhood_id=id)
+
+		table = Contacts.objects.filter(neighbourhood_id=id).last()
 		return table
 

@@ -22,3 +22,40 @@ body{
     align-items: center;
     text-align: center;
 }
+
+.btn {
+    margin: 5px;
+    background-color: #ecb21f;
+    border-style: solid;
+    width: fit-content;
+    padding: 10px 10px;
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    transition: 0.5s;
+    letter-spacing: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    color: #050801;
+}
+
+
+.form-group input,
+.form-group textarea {
+    background-color: black;
+    border-radius: 12px;
+}
+
+form {
+    width: 50vw;
+    background-color: #f4d00354;
+    border-color: #ecb21f;
+    border-style: solid;
+    border-width: 1px;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    border-radius: 5px;
+    padding: 20px;
+}

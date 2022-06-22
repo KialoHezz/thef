@@ -1,22 +1,22 @@
-{% extends "base/base.html" %}
-{% load crispy_forms_tags %}
-{% block content %}
-<div class=" container r-form">
-  <form action="" method="post">
-    {% csrf_token %}
-    <fieldset class="form-control">
-      <h3 text-align-center>Jion Today</h3>
-     <hr>
-      {{form|crispy}}
+{% extends 'base/base.html'%} {% load django_bootstrap5 %}{% block content %} {{block.super}} {% if form.errors %}
+
+<div class="container" style="width: 50vw;"> 
+  <p> Some information may be Incorrect </p>
+  {% endif %}
+  <center>
+    <h2>Kindly Upload your Details below</h2>
+
+    <form class="form" action="/register/" method="post">
+      {% csrf_token %} {% bootstrap_form form%}
+
       <div class="form-group">
-        <button class="btn btn-outline-info mt-6" type="submit">
-          Register
-        </button>
+        <input type="submit" class="btn btn-sm" value="Sign Up">
       </div>
+
+      <input type="hidden" name="next" value="{{next}}">
+
     </form>
-    <div class="border-top pt-3">
-      <small class="text-muted">Already have an Account ? <a href="{% url 'login' %}">login</a></small>
-    </div>
-  </fieldset>
+  </center>
+
 </div>
-{% endblock %}
+{% endblock%}
