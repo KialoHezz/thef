@@ -1,6 +1,9 @@
 #### Project Title
 Thef
 
+#### Description
+    Application that allows you to be in the loop about everything happening in your neighborhood. From contact information of different handyman to meeting announcements or even alerts.
+
 #### User Stories
     1. Sign in with the application to start using.
     2. Set up a profile about me and a general location and my neighborhood name.
